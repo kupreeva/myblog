@@ -25,10 +25,10 @@ class Tag(models.Model):
     def __unicode__(self):
         return self.title
 
-#class Like(models.Model):
-    #user = models.ForeignKey('auth.User', blank=True, null=True)
-    #post = models.ForeignKey('Post', blank=True, null=True)
-    #like_data = models.DateTimeField(default = timezone.now)
+class Like(models.Model):
+    user = models.ForeignKey('auth.User', blank=True, null=True)
+    post = models.ForeignKey('Post', blank=True, null=True)
+    like_data = models.DateTimeField(default = timezone.now)
 
 class Post(models.Model):
 
