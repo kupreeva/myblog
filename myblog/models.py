@@ -20,7 +20,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(verbose_name='URL', max_length=200, unique=True, blank=True)
+    #slug = models.SlugField(verbose_name='URL', max_length=200, unique=True, blank=True)
 
     def __unicode__(self):
         return self.title
@@ -28,7 +28,10 @@ class Tag(models.Model):
 class Like(models.Model):
     user = models.ForeignKey('auth.User', blank=True, null=True)
     post = models.ForeignKey('Post', blank=True, null=True)
-    like_data = models.DateTimeField(default = timezone.now)
+    created_at = models.DateTimeField(auto_now=True)#автоматически выставлять и изменить название переменной, чтоб не с like начиналось
+
+    def __unicode__(self):
+        return str(self.created_at)
 
 class Post(models.Model):
 
@@ -40,15 +43,15 @@ class Post(models.Model):
     text = models.TextField()
     tease = models.TextField('Tease', blank=True) #вступление к статье, которое будет представляться в списке
     is_draft = models.BooleanField(default=True)#Черновик или опубликовано?
-    created_date = models.DateTimeField(default = timezone.now)
+    created_date = models.DateTimeField(auto_now_add=True)
     published_date = models.DateTimeField(default = timezone.now, blank=True, null=True)
-    #likes = models.IntegerField(verbose_name="Like!", default=0)
     allow_comments = models.BooleanField(verbose_name="allow comments", default=True)
     tags = models.ManyToManyField(Tag, verbose_name='Tags', blank=True) #тэги
 
     def publish(self): #метод публикации записи
         self.published_date = timezone.now()
         self.save()
+
 
     def get_absolute_url(self):
         return reverse('post.details', args=[str(self.id)])

@@ -1,0 +1,10 @@
+{% extends 'myblog/base.html' %}
+
+{% block content %}<!--выводим все посты по данному тэгу-->
+  {% for post in posts_in_tag %}
+    <p>{{ post.published_date }}</p>
+    <p>{{ post.title }}</p>
+    <p>{{ post.tease }}</p>
+    <br>
+  {% endfor %}
+{% endblock content %}

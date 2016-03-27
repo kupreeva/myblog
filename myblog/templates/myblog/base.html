@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>My blog</title>
+    </head>
+    <body>
+
+      <div>
+        <a href="{% url 'post_list' %}">Main Page</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'myblog.views.new_post' %}">Create new post</a><!--ссылка на стр создать новый пост-->
+          <a href="{% url 'post_draft_list' %}">View all drafts</a><!--ссылка на стр лист с черновыми постами-->
+        {% endif %}
+      </div>
+
+      {% block content %}
+      {% endblock %}
+
+    </body>
+</html>

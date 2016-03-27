@@ -1,0 +1,18 @@
+{% extends 'myblog/base.html' %}
+
+{% block content %}<!--detail view of this post-->
+
+  <h1>{{ post.title }}</h1>
+  <p>{{ post.text|linebreaks }}</p>
+
+  {% if post.published_date %}<!--if the post is published, we show the date of publication-->
+    {{ post.published_date }}<br>
+  {% else %}<!--and if not, offer to publish-->
+    <a href="{% url 'myblog.views.post_publish' pk=post.pk %}">Publish this post</a>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <a href="{% url 'post_edit' pk=post.pk %}">Edit this post</a><br>
+    <a href="{% url 'post_remove' pk=post.pk %}">Delete this post</a>
+  {% endif %}
+{% endblock content %}

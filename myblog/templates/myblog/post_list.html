@@ -1,16 +1,25 @@
-<html>
-    <head>
-        <title>My blog</title>
-    </head>
-    <body>
-        {% for post in posts %}
-            <div>
-                <p>published: {{ post.published_date }}</p>
-                <h1><a href="">{{ post.title }}</a></h1>
-                <p>{{ post.text|linebreaks }}</p>
-                <br>
-                <br>
-           </div>
-        {% endfor %}
-    </body>
-</html>
+{% extends 'myblog/base.html' %}
+
+{% block content %}
+
+  <div><!--выводим список категорий-->
+    <p>Categories: </p>
+    {% for cat in list_of_categories %}
+      <p><a href="{% url 'category' pk=cat.pk %}">{{ cat.title }}</a>,</p>
+    {% endfor %}
+    <br>
+  </div>
+
+  <div><!--выводим список постов-->
+    {% for post in posts %}<!-- posts это переменная в view.py в функции post_list-->
+      <div>
+        <p>published: {{ post.published_date }}</p>
+        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        <p>preview of post:  {{ post.tease }}</p>
+        <br>
+        <br>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock content %}
